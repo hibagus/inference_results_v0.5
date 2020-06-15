@@ -49,12 +49,14 @@ ENV LANG=C.UTF-8
 
 ### Install necessary python 2 modules
 RUN python2 -m pip install --upgrade pip \
+ && python2 -m pip install setuptools \
  && python2 -m pip install --upgrade setuptools wheel virtualenv \
  && python2 -m pip install ez_setup==0.9 \
  && python2 -m pip install numpy \
  && python2 -m pip install absl-py==0.7.1
 
 RUN python3 -m pip install --upgrade pip \
+ && python3 -m pip install setuptools \
  && python3 -m pip install --upgrade setuptools wheel virtualenv \
  && python3 -m pip install cmake==3.11.0 \
  && python3 -m pip install pillow==6.0.0 \
@@ -150,7 +152,7 @@ RUN wget https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/ba
 # Install dependencies of TensorRT-Laboratory
 RUN python3 -m pip install click==6.7 \
  && python3 -m pip install Jinja2==2.10 \
- && python3 -m pip install MarkupSafe==1.0 \
+ && python3 -m pip install MarkupSafe==1.1.0 \
  && python3 -m pip install grpcio==1.16.1 \
  && python3 -m pip install matplotlib==3.0.2 \
  && python3 -m pip install onnx==1.3.0 \
@@ -185,10 +187,10 @@ RUN wget https://github.com/NVlabs/cub/archive/1.8.0.zip -O cub-1.8.0.zip \
 RUN bash /opt/tensorrt/python/python_setup.sh
 
 #install libjemalloc2
-RUN echo 'deb http://archive.ubuntu.com/ubuntu disco main restricted universe multiverse' | tee -a /etc/apt/sources.list.d/disco.list \
-  && echo 'Package: *\nPin: release a=disco\nPin-Priority: -10\n' | tee -a /etc/apt/preferences.d/disco.pref \
+RUN echo 'deb http://archive.ubuntu.com/ubuntu eoan main restricted universe multiverse' | tee -a /etc/apt/sources.list.d/eoan.list \
+  && echo 'Package: *\nPin: release a=eoan\nPin-Priority: -10\n' | tee -a /etc/apt/preferences.d/eoan.pref \
   && apt-get update \
-  && apt-get install --no-install-recommends -t disco -y libjemalloc2 libtcmalloc-minimal4
+  && apt-get install --no-install-recommends -t eoan -y libjemalloc2 libtcmalloc-minimal4
 
 # Install TRT-Lab, which requires g++-5
 RUN apt-get update && apt-get install -y --no-install-recommends g++-5 \
